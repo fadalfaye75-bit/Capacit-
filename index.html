@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Gestion des Chambres</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>Gestion des Chambres</h1>
+
+  <!-- Connexion Admin -->
+  <button id="loginAdmin" class="btn-primary">Connexion Admin</button>
+
+  <div id="adminPanel" style="display:none; margin-bottom:15px;">
+    <label>Formule Lits (Garçons) :</label>
+    <input type="text" id="formulaGarcons" value="Math.max(0, 2 - litsNonOccupes)" style="width:300px;">
+    <br><br>
+    <label>Formule Lits (Filles) :</label>
+    <input type="text" id="formulaFilles" value="Math.max(0, 3 - litsNonOccupes)" style="width:300px;">
+    <br><br>
+    <button id="saveFormulas" class="btn-primary">Sauvegarder Formules</button>
+  </div>
+
+  <!-- Boutons -->
+  <button id="importer" class="btn-primary">Importer Google Sheets</button>
+  <button id="calculer" class="btn-primary">Appliquer Formules</button>
+  <button id="exportExcel" class="btn-primary">Exporter en Excel</button>
+
+  <!-- Tableau -->
+  <div class="table-container">
+    <table id="tableChambres">
+      <thead>
+        <tr>
+          <th>Nom_de_la_chambre</th>
+          <th>Nombre_de_personnes_présents</th>
+          <th>Nombre_de_personnes_hébergées</th>
+          <th>Nombre_de_lits_non_occupés</th>
+          <th>Nombre_de_matelas_dèjà_présents</th>
+          <th>Lits à ajouter</th>
+          <th>Capacité max</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="toast"></div>
+</div>
+
+<!-- XLSX pour Export Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
