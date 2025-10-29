@@ -1,4 +1,4 @@
-// 🔗 Fichiers CSV locaux
+/// 🔗 Fichiers CSV locaux
 const SHEET_GARCONS = "garcons.csv";
 const SHEET_FILLES  = "filles.csv";
 
@@ -23,7 +23,7 @@ async function importSheetLocal(fileName) {
 
   return lines.slice(1).map(line => {
     const obj = {};
-    line.split(",").forEach((val, i) => obj[headers[i]] = val.trim());
+    line.split(",").forEach((val, i) => obj[headers[i].trim()] = val.trim());
     return obj;
   });
 }
@@ -34,13 +34,19 @@ function displayData(data) {
   tbody.innerHTML = "";
 
   data.forEach(item => {
+    // Conversion en nombres
+    const presents = parseInt((item.Nombre_de_personnes_présents || "0").trim());
+    const heberges = parseInt((item.Nombre_de_personnes_hébergées || "0").trim());
+    const litsNon = parseInt((item.Nombre_de_lits_non_occupés || "0").trim());
+    const matelas = parseInt((item.Nombre_de_matelas_dèjà_présents || "0").trim());
+
     let row = document.createElement("tr");
     row.innerHTML = `
       <td>${item.Nom_de_la_chambre || ""}</td>
-      <td>${item.Nombre_de_personnes_présents || 0}</td>
-      <td>${item.Nombre_de_personnes_hébergées || 0}</td>
-      <td>${item.Nombre_de_lits_non_occupés || 0}</td>
-      <td>${item.Nombre_de_matelas_dèjà_présents || 0}</td>
+      <td>${presents}</td>
+      <td>${heberges}</td>
+      <td>${litsNon}</td>
+      <td>${matelas}</td>
       <td></td>
       <td></td>
       <td>${item.Sexe || ""}</td>
@@ -64,7 +70,7 @@ document.getElementById("calculer").addEventListener("click", () => {
   const rows = document.querySelectorAll("#tableChambres tbody tr");
 
   rows.forEach(tr => {
-    let litsNonOccupes = parseInt(tr.children[3].innerText);
+    let litsNonOccupes = parseInt(tr.children[3].innerText.trim()) || 0;
     let sexe = tr.children[7].innerText.toLowerCase();
 
     let calcul = sexe.includes("garçon")
